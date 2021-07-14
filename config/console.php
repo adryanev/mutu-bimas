@@ -26,8 +26,12 @@ $config = [
             ],
         ],
         'db' => $db,
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager'
+        ],
     ],
     'params' => $params,
+
     /*
     'controllerMap' => [
         'fixture' => [ // Fixture generation command line.
