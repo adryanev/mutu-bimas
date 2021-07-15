@@ -4,19 +4,52 @@ $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
-    'id' => 'dashboard-bimas',
-    'name'=>'Dashboard Mutu Bimas',
+    'id' => 'bimas',
+    'name' => 'Dashboard Mutu Bimas',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'modules' => [
         'admin' => [
             'class' => 'mdm\admin\Module',
             'layout' => 'left-menu',
-        ]
+        ],
+        'profile' => [
+            'class' => 'app\modules\profile\Profile',
+        ],
+        'gridview' => [
+            'class' => '\kartik\grid\Module'
+            // enter optional module parameters below - only if you need to
+            // use your own export download action or custom translation
+            // message source
+            // 'downloadAction' => 'gridview/export/download',
+            // 'i18n' => []
+        ],
+        'datecontrol' => [
+            'class' => 'kartik\datecontrol\Module',
+            // format settings for displaying each date attribute (ICU format example)
+            'displaySettings' => [
+                \kartik\datecontrol\Module::FORMAT_DATE => 'dd MMMM yyyy',
+                \kartik\datecontrol\Module::FORMAT_TIME => 'HH:mm:ss',
+                \kartik\datecontrol\Module::FORMAT_DATETIME => 'dd MMMM yyyy HH:mm:ss',
+            ],
+            'saveTimezone' => 'Asia/Jakarta',
+            'displayTimezone' => 'Asia/Jakarta',
+            // format settings for saving each date attribute (PHP format example)
+            'saveSettings' => [
+                \kartik\datecontrol\Module::FORMAT_DATE => 'php:U', // saves as unix timestamp
+                \kartik\datecontrol\Module::FORMAT_TIME => 'php:U',
+                \kartik\datecontrol\Module::FORMAT_DATETIME => 'php:U',
+            ],
+
+
+            // automatically use kartik\widgets for each of the above formats
+            'autoWidget' => true,
+
+        ],
     ],
 
     'components' => [
@@ -55,7 +88,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-//                ['class' => 'common\helpers\UrlRule', 'connectionID' => 'db', /* ... */],
+//                ['class' => 'app\helpers\UrlRule', 'connectionID' => 'db', /* ... */],
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
@@ -94,6 +127,16 @@ $config = [
         ]
     ],
     'params' => $params,
+    'container' => [
+        'definitions' => [
+            \kartik\datecontrol\DateControl::class => [
+                'type' => \kartik\datecontrol\Module::FORMAT_DATE,
+                'widgetOptions' => [
+                    'pluginOptions'=>['autoclose'=>true]
+                ]
+            ]
+        ]
+    ]
 ];
 
 if (YII_ENV_DEV) {
@@ -108,6 +151,15 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
+        'allowedIPs' => ['127.0.0.1', '::1', '192.168.2.2', '192.168.10.1'], // adjust this to your needs
+        'generators' => [ // HERE
+            'crud' => [
+                'class' => 'yii\gii\generators\crud\Generator',
+                'templates' => [
+                    'metronic' => '@app/templates/crud/metronic',
+                ]
+            ]
+        ],
         // uncomment the following to add your IP if you are not connecting from localhost.
         //'allowedIPs' => ['127.0.0.1', '::1'],
     ];

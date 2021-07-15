@@ -1,6 +1,6 @@
 <?php
 
-use common\widgets\Breadcrumbs;
+use app\widgets\Breadcrumbs;
 
 ?>
 <!-- begin:: Subheader -->

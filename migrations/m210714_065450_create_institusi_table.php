@@ -15,8 +15,9 @@ class m210714_065450_create_institusi_table extends Migration
         $this->createTable('{{%institusi}}', [
             'id' => $this->primaryKey(),
             'nama'=>$this->string(),
+            'nama_ketua'=>$this->string(),
+            'tanggal_berdiri'=>$this->integer(),
             'alamat'=>$this->string(),
-            'kodepos'=>$this->string(),
             'nomor_telp'=>$this->string(),
             'homepage'=>$this->string(),
             'email'=>$this->string(),
