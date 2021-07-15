@@ -6,6 +6,7 @@ namespace app\controllers;
 
 use app\models\Aplikasi;
 use app\models\Institusi;
+use yii\base\Exception;
 use yii\helpers\FileHelper;
 use yii\httpclient\Client;
 use yii\web\Controller;
@@ -25,16 +26,21 @@ class BaseApiController extends Controller
      * @param $controller
      * @param $actions
      * @param array $params
-     * @return \yii\httpclient\Response
+     * @return string|\yii\httpclient\Response
      * @throws \yii\base\InvalidConfigException
      * @throws \yii\httpclient\Exception
      */
     protected function sendRequest(Aplikasi $aplikasi,$controller,$actions,$params =[]){
-        return $this->client->createRequest()
+        $response =  $this->client->createRequest()
             ->setMethod('GET')
             ->setUrl($aplikasi->endpoint.'/'.$controller.'/'.$actions)
             ->setData($params)
             ->send();
+
+        if(!$response->isOk){
+            throw new \yii\httpclient\Exception('Tidak dapat terhubung dengan API Institusi');
+        }
+        return  $response;
     }
 
     protected function findInstitusi($id){

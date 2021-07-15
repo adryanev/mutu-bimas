@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'model' => $model,
                     'attributes' => [
                                 'id',
-            'id_institusi',
+            'institusi.nama',
             'nama',
             'endpoint:url',
             'created_at:datetime',

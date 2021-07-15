@@ -119,7 +119,8 @@ $prodi = $model->prodi;
                                     class="kt-widget__value"><?= $model->kuantitatif ? Html::button('<i class="flaticon2-arrow-down"></i> Download',
                                         [
                                             'class' => 'btn btn-success btn-sm btn-pill btn-elevate btn-elevate-air showModalButton',
-                                            'value' => \yii\helpers\Url::to(['/kuantitatif/prodi', 'id' => $model->id]),
+                                            'value' => \yii\helpers\Url::to(['/kuantitatif/prodi', 'id' =>
+                                                $model->id,'institusi'=>$institusi->id]),
                                             'title' => 'Berkas Kuantitatif Prodi'
                                         ]) : 'Belum' ?>
                             </div>
