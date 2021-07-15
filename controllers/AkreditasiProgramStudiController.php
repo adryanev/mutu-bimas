@@ -42,6 +42,7 @@ class AkreditasiProgramStudiController extends BaseApiController
         $response->institusi = $modelInstitusi;
         return $this->render('view',compact('response'));
     }
+
     /**
      * @param Aplikasi $aplikasi
      * @return \yii\httpclient\Response

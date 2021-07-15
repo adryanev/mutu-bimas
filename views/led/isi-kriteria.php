@@ -1,18 +1,28 @@
 <?php
 /**
  * @var $this yii\web\View
- * @var $model ;
- * @var $poinKriteria [];
- * @var $untuk string
+ * @var $response
+ * @var $institusi \app\models\Institusi
  */
+
+$kriteria = $response->kriteria;
+$prodi = $response->prodi;
+$akreditasiProdi = $response->akreditasiProdi;
+$akreditasi = $response->akreditasi;
+$poinKriteria = $response->poinKriteria;
+$model = $response->model;
+$untuk = $response->untuk;
+
+
 $this->title = 'Kriteria ' . $kriteria;
 $this->params['breadcrumbs'][] = [
     'label' => 'Akreditasi Prodi',
-    'url' => ['akreditasi/index', 'prodi' => $prodi->id]
+    'url' => ['akreditasi-program-studi/index']
 ];
 $this->params['breadcrumbs'][] = [
-    'label' => "Akreditasi: {$akreditasiProdi->akreditasi->nama} - {$prodi->nama}",
-    'url' => ['akreditasi/detail', 'id' => $akreditasiProdi->id, 'prodi' => $prodi->id]
+    'label' => "$institusi->nama - $prodi->nama",
+    'url' => ['akreditasi-program-studi/view', 'akreditasi' => $akreditasiProdi->id, 'prodi' => $prodi->id,
+        'institusi'=>$institusi->id]
 ];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -97,7 +107,8 @@ $url = \yii\helpers\Url::to([
     'kriteria' => $kriteria,
     'led' => $model->id,
     'prodi' => $prodi->id,
-    'untuk' => $untuk
+    'untuk' => $untuk,
+    'institusi'=>$institusi->id
 ], true);
 $js = <<<JS
 var loaded = {};

@@ -165,7 +165,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataDokumen' => $dokumenLed,
             'path' => $urlLed,
             'untuk' => 'lihat',
-            'prodi' => $modelProdi
+            'prodi' => $modelProdi,
+            'institusi'=>$response->institusi
         ]) ?>
 
         <?= $this->render('//led/_tabel_led', [

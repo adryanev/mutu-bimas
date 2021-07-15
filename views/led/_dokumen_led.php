@@ -7,10 +7,7 @@
  * @var $prodi int
  */
 
-use akreditasi\models\kriteria9\forms\led\K9DokumenLedProdiUploadForm;
 use app\helpers\FileIconHelper;
-use common\models\Constants;
-use kartik\file\FileInput;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Modal;
@@ -24,39 +21,6 @@ $controller = 'led';
             <h3 class="kt-portlet__head-title">
                 Dokumen LED
             </h3>
-        </div>
-        <div class="kt-portlet__head-toolbar">
-            <div class="kt-portlet__head-actions">
-                <?php if ($untuk === 'isi'): ?>
-                    <?php Modal::begin([
-                        'title' => 'Unggah Dokumen Led',
-                        'toggleButton' => [
-                            'label' => '<i class="la la-upload"></i> &nbsp;Unggah',
-                            'class' => 'btn btn-primary btn-pill btn-elevate btn-elevate-air'
-                        ],
-                        'size' => 'modal-lg',
-                        'clientOptions' => ['backdrop' => 'blur', 'keyboard' => true]
-                    ]); ?>
-                    <?php $form = ActiveForm::begin([
-                        'options' => ['enctype' => 'multipart/form-data'],
-                        'id' => 'dokumen-led-form'
-                    ]) ?>
-
-                    <?= $form->field($modelDokumen, 'dokumenLed')->widget(FileInput::class, [
-                        'pluginOptions' => [
-                            'allowedFileExtensions' => Constants::ALLOWED_EXTENSIONS,
-                        ]
-                    ]) ?>
-
-                    <div class="form-group pull-right">
-                        <?= Html::submitButton('<i class="la la-save"></i> Simpan',
-                            ['class' => 'btn btn-primary btn-pill btn-elevate btn-elevate-air']) ?>
-                    </div>
-                    <?php ActiveForm::end() ?>
-
-                    <?php Modal::end(); ?>
-                <?php endif; ?>
-            </div>
         </div>
 
     </div>
@@ -119,18 +83,10 @@ $controller = 'led';
                                     <?php endif; ?>
                                     <?php Modal::end(); ?>
                                     <?= Html::a('<i class ="la la-download"></i> Unduh',
-                                        [$controller . '/download-dokumen', 'dokumen' => $item->id],
+                                        [$controller . '/download-dokumen', 'dokumen' => $item->id,
+                                            'institusi'=>$institusi->id],
                                         ['class' => 'btn btn-warning btn-pill btn-elevate btn-elevate-air']) ?>
 
-                                    <?= ($untuk === 'isi') ? Html::a('<i class ="la la-trash"></i> Hapus',
-                                        [$controller . '/hapus-dokumen-led'], [
-                                            'class' => 'btn btn-danger btn-pill btn-elevate btn-elevate-air',
-                                            'data' => [
-                                                'method' => 'POST',
-                                                'confirm' => 'Apakah anda yakin menghapus item ini?',
-                                                'params' => ['id' => $item->id, 'prodi' => $prodi->id]
-                                            ]
-                                        ]) : '' ?>
                                 </div>
 
                             </div>

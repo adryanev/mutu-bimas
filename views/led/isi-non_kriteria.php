@@ -1,18 +1,29 @@
 <?php
 /**
  * @var $this yii\web\View
- * @var $ledProdi common\models\kriteria9\led\prodi\K9LedProdi
- * @var $json common\models\kriteria9\led\Led
- * @var $detail common\models\kriteria9\led\prodi\K9LedProdiNonKriteriaDokumen
+ * @var $response
+ * @var $institusi \app\models\Institusi
  */
+
+
+$prodi = $response->prodi;
+$akreditasiProdi = $response->akreditasiProdi;
+$akreditasi = $response->akreditasi;
+$ledProdi = $response->ledProdi;
+$untuk = $response->untuk;
+$json = $response->json;
+$modelNarasi = $response->modelNarasi;
+$currentPoint = $response->currentPoint;
+
 $this->title = $json->nama;
 $this->params['breadcrumbs'][] = [
     'label' => 'Akreditasi Prodi',
-    'url' => ['akreditasi/index', 'prodi' => $prodi->id]
+    'url' => ['akreditasi-program-studi/index']
 ];
 $this->params['breadcrumbs'][] = [
-    'label' => "Akreditasi: {$akreditasiProdi->akreditasi->nama} - {$prodi->nama}",
-    'url' => ['akreditasi/detail', 'id' => $akreditasiProdi->id, 'prodi' => $prodi->id]
+    'label' => "$institusi->nama - $prodi->nama",
+    'url' => ['akreditasi-program-studi/view', 'akreditasi' => $akreditasiProdi->id, 'prodi' => $prodi->id,
+        'institusi'=>$institusi->id]
 ];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -132,7 +143,8 @@ $url = \yii\helpers\Url::to([
     'led/butir-item-non-kriteria',
     'led' => $ledProdi->id,
     'prodi' => $prodi->id,
-    'untuk' => $untuk
+    'untuk' => $untuk,
+    'institusi'=>$institusi->id
 ], true);
 $js = <<<JS
 var loaded = {};
@@ -151,7 +163,6 @@ dataType:"html"
 }).done(function(html){
     loaded[nomor] = html
     $("#"+target.id).removeAttr('class').next().html(html)
-
 
 })
 }
