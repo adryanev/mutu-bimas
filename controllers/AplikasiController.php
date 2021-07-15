@@ -2,15 +2,17 @@
 
 namespace app\controllers;
 
-use Yii;
-use yii\filters\AccessControl;
 use app\models\Aplikasi;
 use app\models\AplikasiSearch;
+use app\models\Institusi;
+use Yii;
+use yii\bootstrap4\ActiveForm;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\Response;
-use yii\bootstrap4\ActiveForm;
 
 
 /**
@@ -24,12 +26,13 @@ class AplikasiController extends Controller
     public function behaviors()
     {
         return [
-            'access'=>[
-                'class'=>AccessControl::className(),
-                'rules'=>[
-                    ['actions'=>['index','create','update','view','delete'],
-                     'allow'=>true,
-                     'roles'=>['@']
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'create', 'update', 'view', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@']
                     ]
                 ]
             ],
@@ -71,6 +74,22 @@ class AplikasiController extends Controller
     }
 
     /**
+     * Finds the Aplikasi model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Aplikasi the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Aplikasi::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    /**
      * Creates a new Aplikasi model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -78,8 +97,8 @@ class AplikasiController extends Controller
     public function actionCreate()
     {
         $model = new Aplikasi();
-
-        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
+        $dataInstitusi = ArrayHelper::map(Institusi::find()->all(), 'id', 'nama');
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         }
@@ -87,17 +106,16 @@ class AplikasiController extends Controller
 
 
             $model->save();
-            Yii::$app->session->setFlash('success','Berhasil menambahkan Aplikasi.');
+            Yii::$app->session->setFlash('success', 'Berhasil menambahkan Aplikasi.');
 
             return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        elseif (Yii::$app->request->isAjax){
-            return $this->renderAjax('_form',['model'=>$model]);
+        } elseif (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_form', ['model' => $model, 'dataInstitusi' => $dataInstitusi]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'dataInstitusi' => $dataInstitusi
         ]);
     }
 
@@ -111,19 +129,21 @@ class AplikasiController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $dataInstitusi = ArrayHelper::map(Institusi::find()->all(), 'id', 'nama');
 
-        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success','Berhasil mengubah Aplikasi.');
+            Yii::$app->session->setFlash('success', 'Berhasil mengubah Aplikasi.');
 
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'dataInstitusi' => $dataInstitusi
         ]);
     }
 
@@ -138,24 +158,8 @@ class AplikasiController extends Controller
     {
         $this->findModel($id)->delete();
 
-        Yii::$app->session->setFlash('success','Berhasil menghapus Aplikasi.');
+        Yii::$app->session->setFlash('success', 'Berhasil menghapus Aplikasi.');
 
         return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Aplikasi model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Aplikasi the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Aplikasi::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 }

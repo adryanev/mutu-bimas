@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "aplikasi".
@@ -24,6 +25,13 @@ class Aplikasi extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'aplikasi';
+    }
+
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class
+        ];
     }
 
     /**

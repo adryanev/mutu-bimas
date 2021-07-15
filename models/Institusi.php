@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -19,6 +20,7 @@ use yii\behaviors\TimestampBehavior;
  * @property int|null $created_at
  * @property int|null $updated_at
  * @property string|null $provinsi
+ * @property string|null $slug
 
  *
  * @property Aplikasi $aplikasi
@@ -40,14 +42,20 @@ class Institusi extends \yii\db\ActiveRecord
     {
         return [
             [['tanggal_berdiri', 'created_at', 'updated_at'], 'integer'],
-            [['nama', 'nama_ketua', 'alamat', 'nomor_telp', 'homepage', 'email','provinsi'], 'string', 'max' => 255],
+            [['nama', 'nama_ketua', 'alamat', 'nomor_telp', 'homepage', 'email','provinsi','slug'], 'string', 'max' =>
+                255],
+            [['slug'], 'safe'],
         ];
     }
 
     public function behaviors()
     {
         return [
-            TimestampBehavior::class
+            TimestampBehavior::class,
+            [
+                'class'=>SluggableBehavior::class,
+                'attribute' => 'nama'
+            ]
         ];
     }
 

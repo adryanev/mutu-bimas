@@ -12,6 +12,9 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
     ],
+    'timezone'=>'Asia/Jakarta',
+    'language' => 'id-ID',
+    'sourceLanguage' => 'id-ID',
     'modules' => [
         'admin' => [
             'class' => 'mdm\admin\Module',
@@ -134,6 +137,18 @@ $config = [
                 'widgetOptions' => [
                     'pluginOptions'=>['autoclose'=>true]
                 ]
+            ],
+            \yii\httpclient\Client::class=>[
+                'responseConfig' => [
+                    'format' => \yii\httpclient\Client::FORMAT_JSON,
+                ],
+                'parsers' => [
+                    // configure options of the JsonParser, parse JSON as objects
+                    \yii\httpclient\Client::FORMAT_JSON => [
+                        'class' => 'yii\httpclient\JsonParser',
+                        'asArray' => false,
+                    ]
+                ],
             ]
         ]
     ]
