@@ -333,7 +333,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'lk/lihat-kriteria',
                                         'lk' => $lkProdi->id,
                                         'kriteria' => $kriteriaJson->kriteria,
-                                        'prodi' => $modelProdi->id
+                                        'prodi' => $modelProdi->id,
+                                        'institusi'=>$response->institusi->id
                                     ], ['class' => 'btn btn-default btn-pill btn-elevate btn-elevate-air']) ?>
 
                                     <!--                        <button type="button" class="btn btn-danger">Lihat</button>-->

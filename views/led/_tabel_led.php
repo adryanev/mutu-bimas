@@ -28,7 +28,7 @@ use yii\bootstrap4\Progress;
         </div>
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-actions">
-                <div class="pull-right ml-2 mr-2">
+                <div class="pull-right mr-2">
                     <strong>Pengisian:&nbsp;<?= Html::encode($led->progress) ?> %</strong>
                     <div class="kt-space-10"></div>
                     <?=

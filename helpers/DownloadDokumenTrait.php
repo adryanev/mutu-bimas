@@ -3,7 +3,7 @@
 
 namespace app\helpers;
 
-use common\models\Constants;
+use app\models\Constants;
 
 trait DownloadDokumenTrait
 {

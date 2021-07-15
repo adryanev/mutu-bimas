@@ -20,7 +20,7 @@ class AkreditasiProgramStudiController extends BaseApiController
 
         $response = [];
         foreach ($aplikasi as $app){
-            $items = $this->fetchAkreditasi($app,'index')->data->items;
+            $items = $this->sendRequest($app,'akreditasi-prodi','index')->data->items;
             $responseObj = new \stdClass();
             $responseObj->items = $items;
             $responseObj->institusi = $app->institusi;
@@ -36,10 +36,9 @@ class AkreditasiProgramStudiController extends BaseApiController
         $aplikasi = $modelInstitusi->aplikasi;
 
         $response = new \stdClass();
-        $r =  $this->client->createRequest()->setMethod('GET')->setUrl($aplikasi->endpoint."/akreditasi-prodi/detail")
-        ->setData(['id'=>$akreditasi])->send();
+        $r = parent::sendRequest($aplikasi,'akreditasi-prodi','detail',['id'=>$akreditasi]);
         $response->items = $r->data;
-        $response->akreditasi = $this->fetchAkreditasi($aplikasi,'view',['id'=>$akreditasi])->data;
+        $response->akreditasi = $this->sendRequest($aplikasi,'akreditasi-prodi','view',['id'=>$akreditasi])->data;
         $response->institusi = $modelInstitusi;
         return $this->render('view',compact('response'));
     }
@@ -49,15 +48,9 @@ class AkreditasiProgramStudiController extends BaseApiController
      * @throws \yii\base\InvalidConfigException
      * @throws \yii\httpclient\Exception
      */
-    protected function fetchAkreditasi(Aplikasi $aplikasi,$action,$params = []){
+     function sendRequest(Aplikasi $aplikasi,$controller,$action,$params = []){
         $data = ArrayHelper::merge($params,['expand'=>'k9LedProdi,k9LkProdi,prodi,akreditasi,kuantitatif']);
-        $response = $this->client->createRequest()
-            ->setMethod('GET')
-            ->setUrl($aplikasi->endpoint."/akreditasi-prodi/".$action)
-            ->setData($data)
-            ->send()
-        ;
-        return $response;
+        return parent::sendRequest($aplikasi,$controller,$action,$data);
     }
 
 }
