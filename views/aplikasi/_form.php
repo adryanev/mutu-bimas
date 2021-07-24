@@ -24,6 +24,7 @@ use yii\bootstrap4\ActiveForm;
     <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'endpoint')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'token')->textInput(['maxlength' => true]) ?>
 
 
     <div class="form-group">

@@ -32,6 +32,7 @@ class BaseApiController extends Controller
      */
     protected function sendRequest(Aplikasi $aplikasi,$controller,$actions,$params =[]){
         $response =  $this->client->createRequest()
+            ->addHeaders(['Authorization'=>'Bearer '.$aplikasi->token])
             ->setMethod('GET')
             ->setUrl($aplikasi->endpoint.'/'.$controller.'/'.$actions)
             ->setData($params)

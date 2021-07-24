@@ -109,7 +109,9 @@ class AplikasiController extends Controller
             Yii::$app->session->setFlash('success', 'Berhasil menambahkan Aplikasi.');
 
             return $this->redirect(['view', 'id' => $model->id]);
-        } elseif (Yii::$app->request->isAjax) {
+        }
+
+        if (Yii::$app->request->isAjax) {
             return $this->renderAjax('_form', ['model' => $model, 'dataInstitusi' => $dataInstitusi]);
         }
 
