@@ -18,7 +18,7 @@ class AplikasiSearch extends Aplikasi
     {
         return [
             [['id', 'id_institusi', 'created_at', 'updated_at'], 'integer'],
-            [['nama', 'endpoint'], 'safe'],
+            [['nama', 'endpoint','token'], 'safe'],
         ];
     }
 
@@ -65,7 +65,8 @@ class AplikasiSearch extends Aplikasi
         ]);
 
         $query->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'endpoint', $this->endpoint]);
+            ->andFilterWhere(['like', 'endpoint', $this->endpoint])
+        ->andFilterWhere(['like','token',$this->token]);
 
         return $dataProvider;
     }

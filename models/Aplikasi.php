@@ -14,6 +14,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string|null $endpoint
  * @property int|null $created_at
  * @property int|null $updated_at
+ * @property string|null $token
  *
  * @property Institusi $institusi
  */
@@ -41,7 +42,7 @@ class Aplikasi extends \yii\db\ActiveRecord
     {
         return [
             [['id_institusi', 'created_at', 'updated_at'], 'integer'],
-            [['nama', 'endpoint'], 'string', 'max' => 255],
+            [['nama', 'endpoint','token'], 'string', 'max' => 255],
             [['id_institusi'], 'unique'],
             [['id_institusi'], 'exist', 'skipOnError' => true, 'targetClass' => Institusi::className(), 'targetAttribute' => ['id_institusi' => 'id']],
         ];
@@ -59,6 +60,7 @@ class Aplikasi extends \yii\db\ActiveRecord
             'endpoint' => Yii::t('app', 'Endpoint'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
+            'token'=>Yii::t('app','Token')
         ];
     }
 
