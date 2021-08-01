@@ -57,7 +57,7 @@ $url = \yii\helpers\Url::to([
 ], true);
 $js = <<<JS
 var loaded = {};
-$('#accordion').on('shown.bs.collapse',function(t) {
+$('.accordion').on('shown.bs.collapse',function(t) {
 var url = new URL("{$url}");
 var target = t.target.children[0].children[0];
 var poin = target.dataset.poin

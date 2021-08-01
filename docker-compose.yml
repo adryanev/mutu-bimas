@@ -1,9 +1,32 @@
 version: '2'
 services:
   php:
-    image: yiisoftware/yii2-php:7.4-apache
+    image: 'yiisoftware/yii2-php:7.4-apache'
     volumes:
-      - ~/.composer-docker/cache:/root/.composer/cache:delegated
-      - ./:/app:delegated
+      - '~/.composer-docker/cache:/root/.composer/cache:delegated'
+      - './:/app:delegated'
     ports:
       - '8000:80'
+    networks:
+      - mutu-network
+  db:
+    image: 'mysql:5.7'
+    restart: always
+    environment:
+      - MYSQL_DATABASE=mutu_bimas
+      - MYSQL_USER=bimas
+      - MYSQL_PASSWORD=RyET8jDvan0JM5rPAAWb
+      - MYSQL_ROOT_PASSWORD=ceIEJnI2b2CF5xZofsSl
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - 'db:/var/lib/mysql'
+    networks:
+      - mutu-network
+volumes:
+  db: null
+networks:
+  mutu-network:
+    driver: bridge
