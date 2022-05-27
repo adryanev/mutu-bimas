@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             //'updated_at',
                             //'verification_token',
 
-                            ['class' => 'common\widgets\ActionColumn', 'header' => 'Aksi'],
+                            ['class' => 'app\widgets\ActionColumn', 'header' => 'Aksi'],
                         ],
                     ]); ?>
 
@@ -76,6 +76,3 @@ $this->params['breadcrumbs'][] = $this->title;
 
     </div>
 </div>
-
-
-
