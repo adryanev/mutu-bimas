@@ -55,7 +55,7 @@
         "codeception/module-asserts": "^1.0.0",
         "yiisoft/yii2-coding-standards": "^2.0",
         "squizlabs/php_codesniffer": "^3.6",
-        "iiifx-production/yii2-autocomplete-helper": "^3.0"
+        "iiifx-production/yii2-autocomplete-helper": "^2.0"
     },
     "config": {
         "process-timeout": 1800,
