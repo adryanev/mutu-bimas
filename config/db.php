@@ -3,8 +3,9 @@
 return [
     'class' => 'yii\db\Connection',
     'dsn' => 'mysql:host=localhost;dbname=mutu_bimas',
-    'username' => 'homestead',
-    'password' => 'secret',
+    // 'dsn' => 'mysql:host=localhost;dbname=mutu_bimas',
+    'username' => 'root',
+    'password' => '',
     'charset' => 'utf8',
 
     // Schema cache options (for production environment)
